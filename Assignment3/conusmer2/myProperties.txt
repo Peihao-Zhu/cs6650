@@ -1,0 +1,5 @@
+# database connection pool configuration
+MySQL_IP_ADDRESS=database-1.csagqfvmywwl.us-west-2.rds.amazonaws.com
+MySQL_PORT=3306
+DB_USERNAME=admin
+DB_PASSWORD=Zhupeihao123

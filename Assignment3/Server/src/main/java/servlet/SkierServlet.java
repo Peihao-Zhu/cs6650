@@ -19,6 +19,7 @@ public class SkierServlet extends HttpServlet {
 
     private Gson gson = new Gson();
 
+
     @Override
     public void init(ServletConfig config) {
         System.out.println("initialize the rabbitmq configuration");
@@ -71,6 +72,7 @@ public class SkierServlet extends HttpServlet {
             // do any sophisticated processing with urlParts which contains all the url params
             // get the request body
             String body = GetPostBody.getPostBody(req);
+            // convert the string back to hashmap
             Type type = new TypeToken<HashMap<String, Integer>>(){}.getType();
             Map<String, Integer> param = gson.fromJson(body, type);
             if(!Validation.checkSkiersNewLiftPostBodyRequest(param)) {
@@ -78,10 +80,14 @@ public class SkierServlet extends HttpServlet {
                  res.getWriter().write(gson.toJson(ErrorVO.builder().message("missing paramterers").build()));
                  return;
             }
-            String[] arr = urlPath.split("/");
-            int skierID = Integer.valueOf(arr[arr.length-1]);
-            param.put("skierID", skierID);
+            String[] parms = urlPath.split("/");
+
+            param.put("resortID", Integer.parseInt(parms[1]));
+            param.put("seasonID", Integer.parseInt(parms[3]));
+            param.put("dayID", Integer.parseInt(parms[5]));
+            param.put("skierID", Integer.parseInt(parms[7]));
             String newMsg = gson.toJson(param);
+
             // ExecutorService executor = Executors.newFixedThreadPool(5);
             SendMsg.send(newMsg);
             // res.getWriter().write(body);

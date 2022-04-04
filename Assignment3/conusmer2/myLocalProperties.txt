@@ -1,0 +1,5 @@
+# database connection pool configuration
+MySQL_IP_ADDRESS=localhost
+MySQL_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=Zhupeihao123
